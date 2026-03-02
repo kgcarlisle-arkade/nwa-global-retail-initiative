@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Land + Launch NWA — A Global Retail Commercialization Initiative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    /* ─── FONTS ─────────────────────────────────────────────── */
+    @font-face { font-family:'Safiro'; src:url('fonts/Safiro-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Safiro'; src:url('fonts/Safiro-Medium.otf') format('opentype'); font-weight:500; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Safiro'; src:url('fonts/Safiro-SemiBold.otf') format('opentype'); font-weight:600; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Safiro'; src:url('fonts/Safiro-Bold.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+
+    /* ─── RESET & TOKENS ────────────────────────────────────── */
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --cypress: #033B43;
+      --coral:   #FC3B66;
+      --white:   #FFFFFF;
+      --off-white: #F5F3EF;
+      --muted:   #3a5c63;
+      --mid:     #8BA3A7;
+      --fh: 'Safiro', Georgia, serif;
+      --fb: 'DM Sans', system-ui, sans-serif;
+    }
+    html { scroll-behavior:smooth; font-size:16px; }
+    body { font-family:var(--fb); color:var(--cypress); background:var(--white); -webkit-font-smoothing:antialiased; }
+    img  { display:block; max-width:100%; }
+    a    { text-decoration:none; color:inherit; }
+
+    /* ─── NAV ───────────────────────────────────────────────── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1.25rem 3rem;
+      transition:background 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    nav.scrolled { background:rgba(3,59,67,0.96); backdrop-filter:blur(10px); }
+    .nav-logo img { height:26px; width:auto; }
+    .nav-cta {
+      display:inline-flex; align-items:center; gap:0.5rem;
+      background:var(--coral); color:var(--white);
+      font-family:var(--fb); font-size:0.75rem; font-weight:500;
+      letter-spacing:0.07em; text-transform:uppercase;
+      padding:0.6rem 1.3rem; border-radius:2px;
+      transition:opacity 0.2s;
+    }
+    .nav-cta:hover { opacity:0.85; }
+
+    /* ─── HERO ──────────────────────────────────────────────── */
+    .hero {
+      position:relative; height:100vh; min-height:680px;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      text-align:center; overflow:hidden;
+    }
+    .hero-bg {
+      position:absolute; inset:0;
+      background-image:url('images/hero.jpg');
+      background-size:cover; background-position:center 42%;
+      transition:transform 10s ease; transform:scale(1.06);
+    }
+    .hero-bg.loaded { transform:scale(1); }
+    .hero-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to bottom, rgba(3,59,67,0.45) 0%, rgba(3,59,67,0.68) 55%, rgba(3,59,67,0.92) 100%);
+    }
+    .hero-content { position:relative; z-index:2; max-width:860px; padding:0 2rem; }
+    .hero-eyebrow {
+      font-size:0.68rem; font-weight:500; letter-spacing:0.16em;
+      text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:1.75rem;
+    }
+    .hero-title {
+      font-family:var(--fh); font-weight:700;
+      font-size:clamp(3.4rem, 7.5vw, 6.5rem);
+      line-height:0.95; letter-spacing:-0.025em; color:var(--white);
+      margin-bottom:1.75rem;
+    }
+    .hero-title .plus { color:var(--coral); }
+    .hero-sub {
+      font-size:clamp(1rem, 1.8vw, 1.15rem); font-weight:300;
+      line-height:1.7; color:rgba(255,255,255,0.75);
+      max-width:580px; margin:0 auto 3rem;
+    }
+    .btn-primary {
+      display:inline-flex; align-items:center; gap:0.55rem;
+      background:var(--coral); color:var(--white);
+      font-family:var(--fb); font-size:0.82rem; font-weight:500;
+      letter-spacing:0.07em; text-transform:uppercase;
+      padding:1rem 2.2rem; border-radius:2px;
+      transition:opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity:0.88; transform:translateY(-2px); }
+    .hero-scroll {
+      position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:0.5rem;
+      color:rgba(255,255,255,0.35); font-size:0.65rem;
+      letter-spacing:0.12em; text-transform:uppercase;
+    }
+    .scroll-line {
+      width:1px; height:38px;
+      background:linear-gradient(to bottom, rgba(255,255,255,0.35), transparent);
+      animation:pulse 2.2s ease infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:.35} 50%{opacity:1} }
+
+    /* ─── SHARED SECTION ATOMS ──────────────────────────────── */
+    .label {
+      font-size:0.68rem; font-weight:500; letter-spacing:0.16em;
+      text-transform:uppercase; color:var(--coral); margin-bottom:1rem; display:block;
+    }
+    .label.light { color:rgba(252,59,102,0.85); }
+    .heading {
+      font-family:var(--fh); font-weight:700;
+      font-size:clamp(1.9rem, 3vw, 2.8rem);
+      line-height:1.08; letter-spacing:-0.02em; color:var(--cypress);
+    }
+    .heading.light { color:var(--white); }
+    .body-copy { font-size:1rem; line-height:1.78; color:var(--muted); }
+    .body-copy.light { color:rgba(255,255,255,0.62); }
+
+    /* ─── REGION ────────────────────────────────────────────── */
+    .region { background:var(--cypress); overflow:hidden; }
+    .region-grid {
+      display:grid; grid-template-columns:1fr 1fr; min-height:620px;
+    }
+    .region-content {
+      padding:7rem 4rem 7rem 3rem;
+      display:flex; flex-direction:column; justify-content:center;
+      max-width:560px; margin-left:auto;
+    }
+    .region-content .heading { color:var(--white); font-size:clamp(1.7rem,2.6vw,2.4rem); margin-bottom:2.5rem; }
+    .stats { display:flex; flex-direction:column; gap:2.8rem; }
+    .stat-num {
+      font-family:var(--fh); font-weight:700;
+      font-size:clamp(4rem, 6.5vw, 6rem);
+      line-height:1; color:var(--white); letter-spacing:-0.03em;
+    }
+    .stat-num sup { color:var(--coral); font-size:0.55em; vertical-align:super; }
+    .stat-lbl { font-size:0.88rem; color:rgba(255,255,255,0.5); margin-top:0.5rem; line-height:1.5; max-width:340px; }
+    .region-body { margin-top:2.5rem; font-size:0.95rem; line-height:1.75; color:rgba(255,255,255,0.6); }
+    .region-photo { position:relative; overflow:hidden; }
+    .region-photo img { width:100%; height:100%; object-fit:cover; object-position:center; }
+    .region-photo::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(to right, rgba(3,59,67,0.35), transparent 50%);
+    }
+
+    /* ─── GAP ───────────────────────────────────────────────── */
+    .gap { background:var(--off-white); padding:7rem 3rem; }
+    .gap-grid { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:start; }
+    .gap-quote {
+      font-family:var(--fh); font-size:clamp(1.3rem,2vw,1.7rem);
+      font-weight:600; line-height:1.35; color:var(--cypress);
+      border-left:3px solid var(--coral); padding-left:1.5rem;
+      margin-top:2.5rem; letter-spacing:-0.015em;
+    }
+    .gap-right { padding-top:3.5rem; }
+    .gap-sublabel {
+      font-size:0.68rem; font-weight:500; letter-spacing:0.14em;
+      text-transform:uppercase; color:var(--mid); margin-bottom:1.4rem; display:block;
+    }
+    .gap-list { list-style:none; display:flex; flex-direction:column; gap:1.1rem; }
+    .gap-list li {
+      display:flex; align-items:flex-start; gap:1rem;
+      font-size:0.92rem; line-height:1.65; color:var(--muted);
+    }
+    .gap-list li::before {
+      content:''; flex-shrink:0; width:18px; height:1px;
+      background:var(--coral); margin-top:0.72em;
+    }
+
+    /* ─── INITIATIVE ────────────────────────────────────────── */
+    .initiative { background:var(--white); padding:7rem 3rem; }
+    .initiative-container { max-width:1100px; margin:0 auto; }
+    .initiative-intro {
+      display:grid; grid-template-columns:1fr 1fr; gap:4rem;
+      margin-bottom:4rem; align-items:end;
+    }
+    .initiative-intro .heading { margin-top:1rem; }
+    .initiative-right { font-size:1rem; line-height:1.78; color:var(--muted); }
+    .pillars {
+      display:grid; grid-template-columns:repeat(5,1fr);
+      gap:1px; background:#d4e0e2; border:1px solid #d4e0e2;
+    }
+    .pillar {
+      background:var(--white); padding:2.2rem 1.6rem;
+      transition:background 0.25s ease, color 0.25s ease;
+      cursor:default;
+    }
+    .pillar:hover { background:var(--cypress); }
+    .pillar:hover .p-num  { color:rgba(252,59,102,0.5) !important; }
+    .pillar:hover .p-name { color:var(--white) !important; }
+    .pillar:hover .p-layer{ color:rgba(252,59,102,0.8) !important; }
+    .pillar:hover .p-desc { color:rgba(255,255,255,0.6) !important; }
+    .p-num  { font-family:var(--fh); font-size:2.6rem; font-weight:700; color:rgba(3,59,67,0.1); line-height:1; margin-bottom:1.4rem; transition:color 0.25s; }
+    .p-name { font-family:var(--fh); font-size:0.97rem; font-weight:600; color:var(--cypress); line-height:1.25; margin-bottom:0.35rem; transition:color 0.25s; }
+    .p-layer{ font-size:0.67rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--coral); margin-bottom:0.9rem; transition:color 0.25s; }
+    .p-desc { font-size:0.8rem; line-height:1.65; color:#5a7a80; transition:color 0.25s; }
+
+    /* ─── PROOF ─────────────────────────────────────────────── */
+    .proof { background:var(--cypress); padding:7rem 3rem; position:relative; overflow:hidden; }
+    .proof::before {
+      content:''; position:absolute; top:0; right:0; width:45%; height:100%;
+      background-image:url('images/ledger.jpg');
+      background-size:cover; background-position:center; opacity:0.08;
+    }
+    .proof-container { max-width:1100px; margin:0 auto; position:relative; z-index:1; }
+    .proof-head { display:grid; grid-template-columns:1fr 1fr; gap:3.5rem; margin-bottom:4rem; align-items:end; }
+    .comparables { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,0.1); }
+    .comp {
+      background:rgba(255,255,255,0.04); padding:2.5rem 2rem;
+      border:1px solid rgba(255,255,255,0.07);
+      transition:background 0.25s;
+    }
+    .comp:hover { background:rgba(255,255,255,0.09); }
+    .comp-city { font-size:0.67rem; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--coral); margin-bottom:0.4rem; }
+    .comp-name { font-family:var(--fh); font-size:1rem; font-weight:600; color:var(--white); line-height:1.2; margin-bottom:1.8rem; }
+    .comp-stat { font-family:var(--fh); font-size:clamp(2.2rem,3.5vw,3.2rem); font-weight:700; color:var(--white); line-height:1; letter-spacing:-0.02em; margin-bottom:0.4rem; }
+    .comp-stat span { color:var(--coral); }
+    .comp-desc { font-size:0.83rem; line-height:1.6; color:rgba(255,255,255,0.5); margin-bottom:1rem; }
+    .comp-note { font-size:0.73rem; color:rgba(255,255,255,0.28); line-height:1.55; }
+    .proof-foot {
+      margin-top:3rem; padding-top:2.5rem;
+      border-top:1px solid rgba(255,255,255,0.1);
+      display:flex; align-items:center; justify-content:space-between; gap:3rem;
+    }
+    .proof-foot-text { font-family:var(--fh); font-size:clamp(1rem,1.6vw,1.35rem); font-weight:500; color:rgba(255,255,255,0.68); max-width:560px; line-height:1.45; }
+    .proof-foot-text em { color:var(--white); font-style:normal; }
+    .text-link {
+      font-size:0.75rem; font-weight:500; letter-spacing:0.09em;
+      text-transform:uppercase; color:var(--coral);
+      display:inline-flex; align-items:center; gap:0.4rem;
+      white-space:nowrap; transition:gap 0.2s;
+    }
+    .text-link:hover { gap:0.75rem; }
+
+    /* ─── OUTCOMES ──────────────────────────────────────────── */
+    .outcomes { background:var(--white); padding:7rem 3rem; }
+    .outcomes-container { max-width:1100px; margin:0 auto; }
+    .outcomes-head { display:grid; grid-template-columns:1fr 1fr; gap:4rem; margin-bottom:4rem; align-items:end; }
+    .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:#d4e0e2; border:1px solid #d4e0e2; }
+    .kpi { background:var(--white); padding:2.5rem 2rem; }
+    .kpi-num { font-family:var(--fh); font-size:clamp(2.6rem,4vw,3.6rem); font-weight:700; color:var(--cypress); line-height:1; letter-spacing:-0.03em; margin-bottom:0.6rem; }
+    .kpi-num span { color:var(--coral); }
+    .kpi-lbl { font-size:0.83rem; line-height:1.55; color:#5a7a80; }
+    .outcomes-photo {
+      margin-top:3rem; display:grid; grid-template-columns:1fr 1fr; gap:1px; background:#d4e0e2; overflow:hidden;
+    }
+    .outcomes-photo img { width:100%; height:240px; object-fit:cover; }
+
+    /* ─── PARTNERSHIP ───────────────────────────────────────── */
+    .partnership { background:var(--off-white); padding:7rem 3rem; }
+    .partnership-container { max-width:1100px; margin:0 auto; }
+    .partnership-head { max-width:560px; margin-bottom:3.5rem; }
+    .partner-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:#d4e0e2; }
+    .partner {
+      background:var(--white); padding:2.8rem;
+      border-top:3px solid var(--cypress);
+    }
+    .partner-role { font-size:0.67rem; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:var(--mid); margin-bottom:1rem; }
+    .partner-name { font-family:var(--fh); font-size:1.15rem; font-weight:700; color:var(--cypress); margin-bottom:1rem; }
+    .partner-desc { font-size:0.88rem; line-height:1.75; color:var(--muted); }
+    .gov-note {
+      margin-top:1px; background:var(--cypress);
+      padding:2rem 2.8rem; font-size:0.87rem; line-height:1.78; color:rgba(255,255,255,0.65);
+    }
+    .gov-note strong { color:var(--white); }
+
+    /* ─── ASK ───────────────────────────────────────────────── */
+    .ask { background:var(--cypress); padding:8rem 3rem; text-align:center; position:relative; overflow:hidden; }
+    .ask::before {
+      content:''; position:absolute; inset:0;
+      background-image:url('images/community.jpg');
+      background-size:cover; background-position:center 30%; opacity:0.07;
+    }
+    .ask-inner { position:relative; z-index:1; max-width:680px; margin:0 auto; }
+    .ask-num { font-family:var(--fh); font-size:clamp(3.8rem,8vw,6.5rem); font-weight:700; color:var(--white); line-height:1; letter-spacing:-0.03em; margin-bottom:0.4rem; }
+    .ask-num span { color:var(--coral); }
+    .ask-sub { font-size:0.75rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.38); margin-bottom:2.5rem; }
+    .ask-body { font-size:1rem; line-height:1.78; color:rgba(255,255,255,0.6); margin-bottom:2.5rem; }
+    .taper { display:flex; justify-content:center; gap:2px; margin-bottom:3.5rem; }
+    .taper-item { flex:1; max-width:160px; padding:1.2rem 1rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.09); }
+    .taper-yr { font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:0.5rem; }
+    .taper-split { font-family:var(--fh); font-size:1.1rem; font-weight:600; color:var(--white); }
+    .taper-lbl { font-size:0.67rem; color:rgba(255,255,255,0.3); margin-top:0.25rem; }
+
+    /* ─── FOOTER ────────────────────────────────────────────── */
+    footer { background:#021f24; padding:2.8rem 3rem; }
+    .foot-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:2rem; }
+    .foot-logo img { height:22px; width:auto; opacity:0.6; }
+    .foot-text { font-size:0.75rem; color:rgba(255,255,255,0.28); line-height:1.65; text-align:center; }
+    .foot-contact { font-size:0.75rem; color:rgba(255,255,255,0.38); text-align:right; line-height:1.7; }
+    .foot-contact a { color:var(--coral); opacity:0.8; transition:opacity 0.2s; }
+    .foot-contact a:hover { opacity:1; }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────── -->
+<nav id="nav">
+  <div class="nav-logo">
+    <img src="images/logo-white.png" alt="Arkade">
+  </div>
+  <a href="concept-paper.pdf" class="nav-cta" download>Download Concept Paper &rarr;</a>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A Greater Bentonville Area Chamber of Commerce &amp; Arkade Initiative</p>
+    <h1 class="hero-title">Land <span class="plus">+</span> Launch NWA</h1>
+    <p class="hero-sub">A structured commercialization platform bringing the world's most promising retail and supply chain technology companies to Northwest Arkansas — to land, to launch, and to stay.</p>
+    <a href="concept-paper.pdf" class="btn-primary" download>Download the Concept Paper &rarr;</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Explore</span>
+  </div>
+</section>
+
+<!-- ── THE REGION ───────────────────────────────────────────── -->
+<div class="region">
+  <div class="region-grid">
+    <div class="region-content">
+      <span class="label light">Northwest Arkansas</span>
+      <h2 class="heading light">One of the most influential retail ecosystems in the world.</h2>
+      <div class="stats">
+        <div>
+          <div class="stat-num">1,100<sup>+</sup></div>
+          <div class="stat-lbl">supplier offices headquartered in Bentonville — the most concentrated retail supplier network on earth</div>
+        </div>
+        <div>
+          <div class="stat-num">4</div>
+          <div class="stat-lbl">global industry headquarters: Walmart, Sam's Club, J.B. Hunt, and Tyson Foods</div>
+        </div>
+      </div>
+      <p class="region-body">Every major retail and supply chain technology company in the world wants access to this market. The question is whether Northwest Arkansas captures that interest — or concedes it to more organized ecosystems.</p>
+    </div>
+    <div class="region-photo">
+      <img src="images/fish.jpg" alt="Stefan Sagmeister's 'Lakes &amp; Rivers' installation at the Ledger Building, Downtown Bentonville">
+    </div>
+  </div>
+</div>
+
+<!-- ── THE GAP ──────────────────────────────────────────────── -->
+<div class="gap">
+  <div class="gap-grid">
+    <div>
+      <span class="label">The Challenge</span>
+      <h2 class="heading">The interest is here.<br>The infrastructure isn't.</h2>
+      <blockquote class="gap-quote">"Without a formalized landing pathway, interest does not consistently translate into presence."</blockquote>
+    </div>
+    <div class="gap-right">
+      <span class="gap-sublabel">Today, without Land + Launch NWA:</span>
+      <ul class="gap-list">
+        <li>International companies conduct cold outreach or visit Bentonville for 1–2 days of meetings — then leave</li>
+        <li>Introductions are made informally, without structure or sustained follow-through</li>
+        <li>No formalized pathway connects companies to workspace, pilot opportunities, regulatory navigation, or workforce</li>
+        <li>High-growth companies default to Austin, Atlanta, New York, and Toronto — ecosystems that actively receive them</li>
+        <li>Physical relocation, high-skill job creation, and long-term capital investment remain unrealized</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ── THE INITIATIVE ───────────────────────────────────────── -->
+<div class="initiative">
+  <div class="initiative-container">
+    <div class="initiative-intro">
+      <div>
+        <span class="label">The Solution</span>
+        <h2 class="heading">A structured platform.<br>A clear pathway.<br>A place to stay.</h2>
+      </div>
+      <div class="initiative-right">
+        <p>Land + Launch NWA is an annual cohort-based commercialization program supporting 6–12 growth-stage retail technology and supply chain companies through a structured six-month market entry engagement. Led by the Greater Bentonville Area Chamber of Commerce. Delivered by Arkade.</p>
+        <p style="margin-top:1rem;">Participating companies receive dedicated commercialization support, curated introductions to retailers, suppliers, and investors, physical workspace at Arkade, regulatory and relocation navigation, and full integration into the regional innovation ecosystem.</p>
+      </div>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="p-num">01</div>
+        <div class="p-name">Market Intelligence</div>
+        <div class="p-layer">The Foundation Layer</div>
+        <div class="p-desc">Identifying the right companies and positioning NWA competitively in global recruitment markets.</div>
+      </div>
+      <div class="pillar">
+        <div class="p-num">02</div>
+        <div class="p-name">Global Recruitment</div>
+        <div class="p-layer">The Acquisition Layer</div>
+        <div class="p-desc">Proactively sourcing and attracting qualified companies through roadshows, embassy partnerships, and targeted outreach.</div>
+      </div>
+      <div class="pillar">
+        <div class="p-num">03</div>
+        <div class="p-name">Commercialization Platform</div>
+        <div class="p-layer">The Conversion Layer</div>
+        <div class="p-desc">Converting visiting companies into active commercial participants through immersion, introductions, and pilot facilitation.</div>
+      </div>
+      <div class="pillar">
+        <div class="p-num">04</div>
+        <div class="p-name">Embedding &amp; Expansion</div>
+        <div class="p-layer">The Retention Layer</div>
+        <div class="p-desc">Transforming initial visits into sustained presence through legal navigation, workspace, investor access, and relocation support.</div>
+      </div>
+      <div class="pillar">
+        <div class="p-num">05</div>
+        <div class="p-name">Talent &amp; Ecosystem</div>
+        <div class="p-layer">The Compounding Layer</div>
+        <div class="p-desc">Creating two-way integration between incoming companies and the regional workforce — strengthening long-term retention.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── THE PROOF ─────────────────────────────────────────────── -->
+<div class="proof">
+  <div class="proof-container">
+    <div class="proof-head">
+      <div>
+        <span class="label light">The Precedent</span>
+        <h2 class="heading light">This works. Every comparable metro that has built it has seen the returns.</h2>
+      </div>
+      <div>
+        <p class="body-copy light">Structured soft-landing and commercialization programs are an established and growing category of regional economic development investment. NWA is not pioneering a new concept — it is catching up on a proven one.</p>
+      </div>
+    </div>
+    <div class="comparables">
+      <div class="comp">
+        <div class="comp-city">Austin, Texas</div>
+        <div class="comp-name">Opportunity Austin<br>Global Launch Pad</div>
+        <div class="comp-stat">400<span>+</span></div>
+        <div class="comp-desc">foreign-owned companies now operating in the Austin region through structured international attraction</div>
+        <div class="comp-note">Chamber-backed soft-landing model — the most direct structural analog to Land + Launch NWA</div>
+      </div>
+      <div class="comp">
+        <div class="comp-city">Atlanta, Georgia</div>
+        <div class="comp-name">Georgia Tech Enterprise<br>Innovation Institute</div>
+        <div class="comp-stat">68<span>%</span></div>
+        <div class="comp-desc">of participating international companies successfully expanded into the U.S. market</div>
+        <div class="comp-note">vs. ~30% industry average for informal market entry — structure is the decisive variable</div>
+      </div>
+      <div class="comp">
+        <div class="comp-city">Toronto, Ontario</div>
+        <div class="comp-name">Toronto Global</div>
+        <div class="comp-stat">33<span>k</span></div>
+        <div class="comp-desc">jobs created and $1.3B CAD in cumulative tax impact across 260 structured investments since inception</div>
+        <div class="comp-note">The gold standard model — demonstrating that structured FDI attraction is high-return economic infrastructure</div>
+      </div>
+    </div>
+    <div class="proof-foot">
+      <p class="proof-foot-text">NWA has everything these metros have — and in retail and supply chain, <em>considerably more</em>. What it has lacked is the infrastructure. Land + Launch NWA builds it.</p>
+      <a href="comparables-report.pdf" class="text-link" download>Full Comparables Report &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── OUTCOMES ──────────────────────────────────────────────── -->
+<div class="outcomes">
+  <div class="outcomes-container">
+    <div class="outcomes-head">
+      <div>
+        <span class="label">Measurable Impact</span>
+        <h2 class="heading">Three years.<br>Clear targets.<br>Accountable outcomes.</h2>
+      </div>
+      <div>
+        <p class="body-copy">Every KPI is tied directly to grant activities and tracked through quarterly reporting to the Chamber. Full metrics and accountability framework are detailed in the Concept Paper.</p>
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi">
+        <div class="kpi-num">20–30</div>
+        <div class="kpi-lbl">growth-stage companies supported through structured commercialization programming</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num">30<span>+</span></div>
+        <div class="kpi-lbl">high-skill jobs created in Northwest Arkansas by embedded companies</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num">$10M<span>+</span></div>
+        <div class="kpi-lbl">in venture or growth capital attracted by participating companies to the region</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num">15<span>+</span></div>
+        <div class="kpi-lbl">retailer or supplier pilot programs launched, accelerating enterprise adoption</div>
+      </div>
+    </div>
+    <div class="outcomes-photo">
+      <img src="images/community.jpg" alt="Networking at Arkade, Bentonville">
+      <img src="images/ledger_street.jpg" alt="The Ledger Building, Downtown Bentonville">
+    </div>
+  </div>
+</div>
+
+<!-- ── PARTNERSHIP ───────────────────────────────────────────── -->
+<div class="partnership">
+  <div class="partnership-container">
+    <div class="partnership-head">
+      <span class="label">The Partnership</span>
+      <h2 class="heading">Three organizations. Each essential. None sufficient alone.</h2>
+    </div>
+    <div class="partner-grid">
+      <div class="partner">
+        <div class="partner-role">Fiduciary &amp; Civic Lead</div>
+        <div class="partner-name">Greater Bentonville Area Chamber of Commerce</div>
+        <div class="partner-desc">Serves as the initiative's fiduciary, administering all grant funds and ensuring alignment with regional economic development priorities. The Chamber's Bold Bentonville strategic plan explicitly names this type of coordinated commercialization infrastructure as a priority — and names the Walton Family Foundation as a key partner in getting there. The Chamber has successfully deployed its 501(c)(3) status as fiduciary for prior regional innovation programs, providing a proven accountability structure for exactly this kind of public-private initiative.</div>
+      </div>
+      <div class="partner">
+        <div class="partner-role">Commercialization Delivery Partner</div>
+        <div class="partner-name">Arkade</div>
+        <div class="partner-desc">Serves as the operating delivery partner under a formal agreement with the Chamber. Arkade executes the recruitment strategy, delivers all programming and support services, manages company relationships, tracks commercialization outcomes, and coordinates ecosystem engagement. Arkade brings validated experience converting global retail technology interest into pilots, partnerships, and sustained regional presence — doing what no other entity in NWA is currently structured to do.</div>
+      </div>
+    </div>
+    <div class="gov-note">
+      <strong>On governance and accountability:</strong> All grant funds will be administered through the Chamber, allocated strictly toward approved programmatic activities, and reported against clear KPIs on a quarterly basis. Annual public economic impact reporting will be produced. The initiative is designed as catalytic funding with a built-in sustainability path — not a permanent operating subsidy.
+    </div>
+  </div>
+</div>
+
+<!-- ── THE ASK ───────────────────────────────────────────────── -->
+<div class="ask">
+  <div class="ask-inner">
+    <span class="label light">The Investment</span>
+    <div class="ask-num">$1.25<span>M</span></div>
+    <p class="ask-sub">Three-Year Catalytic Grant — Matched 1:1</p>
+    <p class="ask-body">Matched dollar-for-dollar by $1.25M in private and in-kind contributions from Arkade and the Chamber. Designed as catalytic funding, not permanent subsidy — with a structured taper toward earned revenue, corporate sponsorship, and long-term sustainability.</p>
+    <div class="taper">
+      <div class="taper-item">
+        <div class="taper-yr">Year 1</div>
+        <div class="taper-split">60 / 40</div>
+        <div class="taper-lbl">Grant / Match</div>
+      </div>
+      <div class="taper-item">
+        <div class="taper-yr">Year 2</div>
+        <div class="taper-split">50 / 50</div>
+        <div class="taper-lbl">Grant / Match</div>
+      </div>
+      <div class="taper-item">
+        <div class="taper-yr">Year 3</div>
+        <div class="taper-split">30 / 70</div>
+        <div class="taper-lbl">Grant / Earned + Match</div>
+      </div>
+    </div>
+    <a href="concept-paper.pdf" class="btn-primary" download>Download the Full Concept Paper &rarr;</a>
+  </div>
+</div>
+
+<!-- ── FOOTER ────────────────────────────────────────────────── -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-logo">
+      <img src="images/logo-white.png" alt="Arkade">
+    </div>
+    <p class="foot-text">
+      Land + Launch NWA is a public-private partnership initiative of the<br>
+      Greater Bentonville Area Chamber of Commerce and Arkade (Spring Arkade LLC).
+    </p>
+    <div class="foot-contact">
+      Questions?<br>
+      <a href="mailto:kathryn@arkaderetail.com">kathryn@arkaderetail.com</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  }, { passive: true });
+
+  // Hero subtle zoom on load
+  const bg = document.getElementById('heroBg');
+  bg.style.backgroundImage = "url('images/hero.jpg')";
+  requestAnimationFrame(() => setTimeout(() => bg.classList.add('loaded'), 80));
+</script>
+
+</body>
+</html>
