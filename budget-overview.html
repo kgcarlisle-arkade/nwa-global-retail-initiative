@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget Overview — Land + Launch NWA</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  @font-face { font-family:'Safiro'; src:url('fonts/Safiro-Regular.otf') format('opentype'); font-weight:400; }
+  @font-face { font-family:'Safiro'; src:url('fonts/Safiro-Medium.otf') format('opentype'); font-weight:500; }
+  @font-face { font-family:'Safiro'; src:url('fonts/Safiro-SemiBold.otf') format('opentype'); font-weight:600; }
+  @font-face { font-family:'Safiro'; src:url('fonts/Safiro-Bold.otf') format('opentype'); font-weight:700; }
+
+  :root {
+    --cypress: #033B43;
+    --coral: #FC3B66;
+    --white: #FFFFFF;
+    --off-white: #F5F3EF;
+    --muted: #3a5c63;
+    --mid: #8BA3A7;
+    --fh: 'Safiro', Georgia, serif;
+    --fb: 'DM Sans', system-ui, sans-serif;
+  }
+
+  @page {
+    size: letter;
+    margin: 0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 15px; }
+  body {
+    font-family: var(--fb);
+    color: var(--cypress);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ─── COVER ─── */
+  .cover {
+    height: 100vh;
+    background: var(--cypress);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 4.5rem;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 55%; height: 100%;
+    background: linear-gradient(135deg, rgba(252,59,102,0.06) 0%, transparent 60%);
+  }
+  .cover-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 1.6rem;
+    position: relative;
+  }
+  .cover-title {
+    font-family: var(--fh);
+    font-weight: 700;
+    font-size: 3.8rem;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--white);
+    margin-bottom: 1.8rem;
+    position: relative;
+  }
+  .cover-title .plus { color: var(--coral); }
+  .cover-sub {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.55);
+    max-width: 480px;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 3rem;
+    position: relative;
+  }
+  .cover-meta-item {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.8;
+  }
+  .cover-meta-item strong {
+    display: block;
+    color: rgba(255,255,255,0.6);
+    font-weight: 500;
+  }
+  .cover-line {
+    position: absolute;
+    top: 4.5rem;
+    right: 4.5rem;
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--coral), transparent);
+  }
+
+  /* ─── PAGES ─── */
+  .page {
+    padding: 3.5rem 4rem;
+    min-height: 100vh;
+    page-break-after: always;
+    position: relative;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 2.8rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid #e0ddd7;
+  }
+  .page-label {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--coral);
+  }
+  .page-title {
+    font-family: var(--fh);
+    font-weight: 700;
+    font-size: 1.7rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--cypress);
+    margin-top: 0.4rem;
+  }
+  .page-num {
+    font-family: var(--fh);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--mid);
+  }
+
+  /* ─── SUMMARY CARDS ─── */
+  .summary-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #d4e0e2;
+    border: 1px solid #d4e0e2;
+    margin-bottom: 2.5rem;
+  }
+  .summary-card {
+    background: var(--white);
+    padding: 2rem 1.8rem;
+    text-align: center;
+  }
+  .summary-card.dark {
+    background: var(--cypress);
+  }
+  .summary-num {
+    font-family: var(--fh);
+    font-weight: 700;
+    font-size: 2.4rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--cypress);
+    margin-bottom: 0.4rem;
+  }
+  .summary-card.dark .summary-num { color: var(--white); }
+  .summary-num span { color: var(--coral); }
+  .summary-lbl {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+  .summary-card.dark .summary-lbl { color: rgba(255,255,255,0.4); }
+
+  /* ─── TABLES ─── */
+  .section-title {
+    font-family: var(--fh);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--cypress);
+    margin-bottom: 0.8rem;
+    padding-left: 0.8rem;
+    border-left: 3px solid var(--coral);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    font-size: 0.78rem;
+  }
+  thead th {
+    background: var(--cypress);
+    color: rgba(255,255,255,0.75);
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.7rem 0.8rem;
+    text-align: right;
+    white-space: nowrap;
+  }
+  thead th:first-child { text-align: left; }
+  tbody td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid #eae7e2;
+    text-align: right;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  tbody td:first-child {
+    text-align: left;
+    color: var(--cypress);
+    font-weight: 400;
+  }
+  tbody tr:last-child td {
+    border-bottom: 2px solid var(--cypress);
+    font-weight: 600;
+    color: var(--cypress);
+  }
+  tbody tr:nth-child(even) td { background: rgba(245,243,239,0.5); }
+  tbody tr:last-child td { background: transparent; }
+
+  .note {
+    font-size: 0.7rem;
+    color: var(--mid);
+    line-height: 1.6;
+    margin-top: 0.5rem;
+  }
+
+  /* ─── ANNUAL BREAKDOWN ─── */
+  .annual-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #d4e0e2;
+    border: 1px solid #d4e0e2;
+    margin-bottom: 2rem;
+  }
+  .annual-card {
+    background: var(--white);
+    padding: 1.8rem;
+  }
+  .annual-year {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 0.6rem;
+  }
+  .annual-total {
+    font-family: var(--fh);
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--cypress);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .annual-bar {
+    height: 6px;
+    background: var(--off-white);
+    border-radius: 3px;
+    margin-bottom: 0.8rem;
+    overflow: hidden;
+    display: flex;
+  }
+  .annual-bar-wff {
+    background: var(--coral);
+    height: 100%;
+  }
+  .annual-bar-match {
+    background: var(--cypress);
+    height: 100%;
+  }
+  .annual-detail {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .annual-detail strong { color: var(--cypress); font-weight: 500; }
+
+  /* ─── TAPER VISUAL ─── */
+  .taper-section {
+    background: var(--cypress);
+    padding: 2rem 2.5rem;
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .taper-item { text-align: center; }
+  .taper-yr {
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 0.4rem;
+  }
+  .taper-pct {
+    font-family: var(--fh);
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 0.15rem;
+  }
+  .taper-pct span { color: var(--coral); }
+  .taper-lbl {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ─── FOOTER BAR ─── */
+  .page-footer {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 1rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.6rem;
+    color: var(--mid);
+    letter-spacing: 0.05em;
+  }
+  .page-footer-line {
+    flex: 1;
+    height: 1px;
+    background: #e0ddd7;
+    margin: 0 1.5rem;
+  }
+
+  /* ─── CATEGORY TOTALS TABLE ─── */
+  .totals-table {
+    margin-top: 1rem;
+  }
+  .totals-table tbody td:first-child {
+    font-weight: 500;
+  }
+  .totals-table tbody tr:last-child td {
+    border-bottom: 3px double var(--cypress);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  /* ─── ASSUMPTIONS ─── */
+  .assumptions {
+    background: var(--off-white);
+    padding: 1.8rem 2rem;
+    margin-top: 1.5rem;
+  }
+  .assumptions-title {
+    font-family: var(--fh);
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--cypress);
+    margin-bottom: 0.8rem;
+  }
+  .assumptions ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .assumptions li {
+    font-size: 0.72rem;
+    line-height: 1.55;
+    color: var(--muted);
+    padding-left: 1.2rem;
+    position: relative;
+  }
+  .assumptions li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.45em;
+    width: 12px;
+    height: 1px;
+    background: var(--coral);
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ COVER ══════════ -->
+<div class="cover">
+  <div class="cover-line"></div>
+  <p class="cover-eyebrow">Budget Overview</p>
+  <h1 class="cover-title">Land <span class="plus">+</span> Launch NWA</h1>
+  <p class="cover-sub">Three-year expense budget for the NW Arkansas Global Retail &amp; Supply Chain Innovation Initiative — a public-private partnership of the Greater Bentonville Area Chamber of Commerce and Arkade.</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <strong>Program Duration</strong>
+      36 Months (3 Years)
+    </div>
+    <div class="cover-meta-item">
+      <strong>Total Program Budget</strong>
+      $2,303,107
+    </div>
+    <div class="cover-meta-item">
+      <strong>WFF Grant Request</strong>
+      ~$1.5M
+    </div>
+    <div class="cover-meta-item">
+      <strong>Arkade + Chamber Match</strong>
+      $821,970
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 1: OVERVIEW ══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div>
+      <div class="page-label">Program Budget</div>
+      <h2 class="page-title">Three-Year Funding Overview</h2>
+    </div>
+    <div class="page-num">01</div>
+  </div>
+
+  <div class="summary-row">
+    <div class="summary-card dark">
+      <div class="summary-num">$2.30<span>M</span></div>
+      <div class="summary-lbl">Total Program Budget</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-num">$1.5<span>M</span></div>
+      <div class="summary-lbl">WFF Grant Request</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-num">$821<span>K</span></div>
+      <div class="summary-lbl">Arkade + Chamber Match</div>
+    </div>
+  </div>
+
+  <!-- Category Totals -->
+  <div class="section-title">Budget by Category (3-Year Total)</div>
+  <table class="totals-table">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>3-Yr Total</th>
+        <th>WFF Grant</th>
+        <th>Match</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Personnel</td>
+        <td>$1,010,724</td>
+        <td>$650,001</td>
+        <td>$360,724</td>
+      </tr>
+      <tr>
+        <td>Program Infrastructure</td>
+        <td>$371,294</td>
+        <td>$238,781</td>
+        <td>$132,513</td>
+      </tr>
+      <tr>
+        <td>Events &amp; Gatherings</td>
+        <td>$429,635</td>
+        <td>$276,300</td>
+        <td>$153,335</td>
+      </tr>
+      <tr>
+        <td>Travel &amp; Recruitment</td>
+        <td>$213,272</td>
+        <td>$137,156</td>
+        <td>$76,116</td>
+      </tr>
+      <tr>
+        <td>Administration</td>
+        <td>$278,181</td>
+        <td>$178,899</td>
+        <td>$99,282</td>
+      </tr>
+      <tr>
+        <td>Grand Total</td>
+        <td>$2,303,107</td>
+        <td>$1,481,137</td>
+        <td>$821,970</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Annual Breakdown -->
+  <div class="section-title">Annual Breakdown &amp; Funding Taper</div>
+  <div class="annual-grid">
+    <div class="annual-card">
+      <div class="annual-year">Year 1 — Launch</div>
+      <div class="annual-total">$745,125</div>
+      <div class="annual-bar">
+        <div class="annual-bar-wff" style="width:100%;"></div>
+      </div>
+      <div class="annual-detail">
+        <strong>WFF Grant:</strong> $745,125 (100%)<br>
+        <strong>Match:</strong> $0 (0%)
+      </div>
+    </div>
+    <div class="annual-card">
+      <div class="annual-year">Year 2 — Scale</div>
+      <div class="annual-total">$767,479</div>
+      <div class="annual-bar">
+        <div class="annual-bar-wff" style="width:65%;"></div>
+        <div class="annual-bar-match" style="width:35%;"></div>
+      </div>
+      <div class="annual-detail">
+        <strong>WFF Grant:</strong> $498,861 (65%)<br>
+        <strong>Match:</strong> $268,618 (35%)
+      </div>
+    </div>
+    <div class="annual-card">
+      <div class="annual-year">Year 3 — Sustain</div>
+      <div class="annual-total">$790,503</div>
+      <div class="annual-bar">
+        <div class="annual-bar-wff" style="width:30%;"></div>
+        <div class="annual-bar-match" style="width:70%;"></div>
+      </div>
+      <div class="annual-detail">
+        <strong>WFF Grant:</strong> $237,151 (30%)<br>
+        <strong>Match:</strong> $553,352 (70%)
+      </div>
+    </div>
+  </div>
+
+  <div class="taper-section">
+    <div class="taper-item">
+      <div class="taper-yr">Year 1</div>
+      <div class="taper-pct">100<span>%</span></div>
+      <div class="taper-lbl">WFF Funded</div>
+    </div>
+    <div class="taper-item">
+      <div class="taper-yr">Year 2</div>
+      <div class="taper-pct">65<span>%</span></div>
+      <div class="taper-lbl">WFF / 35% Match</div>
+    </div>
+    <div class="taper-item">
+      <div class="taper-yr">Year 3</div>
+      <div class="taper-pct">30<span>%</span></div>
+      <div class="taper-lbl">WFF / 70% Match</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Land + Launch NWA</span>
+    <div class="page-footer-line"></div>
+    <span>Budget Overview</span>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 2: PERSONNEL & INFRASTRUCTURE ══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div>
+      <div class="page-label">Detailed Budget</div>
+      <h2 class="page-title">Personnel &amp; Program Infrastructure</h2>
+    </div>
+    <div class="page-num">02</div>
+  </div>
+
+  <div class="section-title">Personnel — $1,010,724</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>L+L %</th>
+        <th>Y1</th>
+        <th>Y2</th>
+        <th>Y3</th>
+        <th>3-Yr Total</th>
+        <th>WFF</th>
+        <th>Match</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Head of Global Retail Innovation Growth</td>
+        <td>100%</td>
+        <td>$150,000</td>
+        <td>$154,500</td>
+        <td>$159,135</td>
+        <td>$463,635</td>
+        <td>$298,166</td>
+        <td>$165,470</td>
+      </tr>
+      <tr>
+        <td>Member Education &amp; Programming Lead</td>
+        <td>100%</td>
+        <td>$120,000</td>
+        <td>$123,600</td>
+        <td>$127,308</td>
+        <td>$370,908</td>
+        <td>$238,532</td>
+        <td>$132,376</td>
+      </tr>
+      <tr>
+        <td>Director of Portfolio Operations (25%)</td>
+        <td>25%</td>
+        <td>$45,000</td>
+        <td>$46,350</td>
+        <td>$47,741</td>
+        <td>$139,091</td>
+        <td>$89,450</td>
+        <td>$49,641</td>
+      </tr>
+      <tr>
+        <td>Event Coordination (contract)</td>
+        <td>50%</td>
+        <td>$12,000</td>
+        <td>$12,360</td>
+        <td>$12,731</td>
+        <td>$37,091</td>
+        <td>$23,853</td>
+        <td>$13,238</td>
+      </tr>
+      <tr>
+        <td>Personnel Subtotal</td>
+        <td></td>
+        <td>$327,000</td>
+        <td>$336,810</td>
+        <td>$346,914</td>
+        <td>$1,010,724</td>
+        <td>$650,001</td>
+        <td>$360,724</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Program Infrastructure — $371,294</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>L+L %</th>
+        <th>Y1</th>
+        <th>Y2</th>
+        <th>Y3</th>
+        <th>3-Yr Total</th>
+        <th>WFF</th>
+        <th>Match</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Occupancy (Base Rent, NNN, etc.)</td>
+        <td>25%</td>
+        <td>$88,125</td>
+        <td>$90,769</td>
+        <td>$93,492</td>
+        <td>$272,386</td>
+        <td>$175,172</td>
+        <td>$97,213</td>
+      </tr>
+      <tr>
+        <td>Recruiting Software &amp; Tools (Harmonic AI)</td>
+        <td>100%</td>
+        <td>$20,000</td>
+        <td>$20,600</td>
+        <td>$21,218</td>
+        <td>$61,818</td>
+        <td>$39,755</td>
+        <td>$22,063</td>
+      </tr>
+      <tr>
+        <td>Marketing &amp; Advertising</td>
+        <td>50%</td>
+        <td>$12,000</td>
+        <td>$12,360</td>
+        <td>$12,731</td>
+        <td>$37,091</td>
+        <td>$23,853</td>
+        <td>$13,238</td>
+      </tr>
+      <tr>
+        <td>Infrastructure Subtotal</td>
+        <td></td>
+        <td>$120,125</td>
+        <td>$123,729</td>
+        <td>$127,441</td>
+        <td>$371,294</td>
+        <td>$238,781</td>
+        <td>$132,513</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="note">Utilities, professional fees, and operating software (Luma Pro, CRM, space management) are fully absorbed by Arkade at $60,000/yr and are excluded from the grant budget. Only the pro-rated Land + Launch allocation for occupancy, recruiting tools, and marketing is included above.</p>
+
+  <div class="page-footer">
+    <span>Land + Launch NWA</span>
+    <div class="page-footer-line"></div>
+    <span>Budget Overview</span>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 3: EVENTS, TRAVEL, ADMIN ══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div>
+      <div class="page-label">Detailed Budget</div>
+      <h2 class="page-title">Events, Travel &amp; Administration</h2>
+    </div>
+    <div class="page-num">03</div>
+  </div>
+
+  <div class="section-title">Events &amp; Gatherings — $429,635</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Event</th>
+        <th>L+L %</th>
+        <th>Y1</th>
+        <th>Y2</th>
+        <th>Y3</th>
+        <th>3-Yr Total</th>
+        <th>WFF</th>
+        <th>Match</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>BiteSized Conference (quarterly)</td>
+        <td>50%</td>
+        <td>$20,000</td>
+        <td>$20,600</td>
+        <td>$21,218</td>
+        <td>$61,818</td>
+        <td>$39,755</td>
+        <td>$22,063</td>
+      </tr>
+      <tr>
+        <td>Industry Education Workshops (monthly)</td>
+        <td>100%</td>
+        <td>$24,000</td>
+        <td>$24,720</td>
+        <td>$25,462</td>
+        <td>$74,182</td>
+        <td>$47,706</td>
+        <td>$26,475</td>
+      </tr>
+      <tr>
+        <td>Bi-Annual NWA Tech Summit</td>
+        <td>100%</td>
+        <td>$70,000</td>
+        <td>$72,100</td>
+        <td>$74,263</td>
+        <td>$216,363</td>
+        <td>$139,144</td>
+        <td>$77,219</td>
+      </tr>
+      <tr>
+        <td>Bentonville Market Immersion Weeks</td>
+        <td>100%</td>
+        <td>$25,000</td>
+        <td>$25,750</td>
+        <td>$26,523</td>
+        <td>$77,273</td>
+        <td>$49,694</td>
+        <td>$27,578</td>
+      </tr>
+      <tr>
+        <td>Events Subtotal</td>
+        <td></td>
+        <td>$139,000</td>
+        <td>$143,170</td>
+        <td>$147,465</td>
+        <td>$429,635</td>
+        <td>$276,300</td>
+        <td>$153,335</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Travel &amp; Recruitment — $213,272</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>L+L %</th>
+        <th>Y1</th>
+        <th>Y2</th>
+        <th>Y3</th>
+        <th>3-Yr Total</th>
+        <th>WFF</th>
+        <th>Match</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>International Recruitment Travel</td>
+        <td>100%</td>
+        <td>$24,000</td>
+        <td>$24,720</td>
+        <td>$25,462</td>
+        <td>$74,182</td>
+        <td>$47,706</td>
+        <td>$26,475</td>
+      </tr>
+      <tr>
+        <td>Key Domestic Industry Events</td>
+        <td>100%</td>
+        <td>$24,000</td>
+        <td>$24,720</td>
+        <td>$25,462</td>
+        <td>$74,182</td>
+        <td>$47,706</td>
+        <td>$26,475</td>
+      </tr>
+      <tr>
+        <td>Inbound Summit Travel</td>
+        <td>100%</td>
+        <td>$21,000</td>
+        <td>$21,630</td>
+        <td>$22,279</td>
+        <td>$64,909</td>
+        <td>$41,743</td>
+        <td>$23,166</td>
+      </tr>
+      <tr>
+        <td>Travel Subtotal</td>
+        <td></td>
+        <td>$69,000</td>
+        <td>$71,070</td>
+        <td>$73,202</td>
+        <td>$213,272</td>
+        <td>$137,156</td>
+        <td>$76,116</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Administration — $278,181</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>L+L %</th>
+        <th>Y1</th>
+        <th>Y2</th>
+        <th>Y3</th>
+        <th>3-Yr Total</th>
+        <th>WFF</th>
+        <th>Match</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Program Administration &amp; Reporting (Chamber)</td>
+        <td>100%</td>
+        <td>$60,000</td>
+        <td>$61,800</td>
+        <td>$63,654</td>
+        <td>$185,454</td>
+        <td>$119,266</td>
+        <td>$66,188</td>
+      </tr>
+      <tr>
+        <td>Fiscal Oversight &amp; Compliance</td>
+        <td>100%</td>
+        <td>$30,000</td>
+        <td>$30,900</td>
+        <td>$31,827</td>
+        <td>$92,727</td>
+        <td>$59,633</td>
+        <td>$33,094</td>
+      </tr>
+      <tr>
+        <td>Administration Subtotal</td>
+        <td></td>
+        <td>$90,000</td>
+        <td>$92,700</td>
+        <td>$95,481</td>
+        <td>$278,181</td>
+        <td>$178,899</td>
+        <td>$99,282</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="assumptions">
+    <div class="assumptions-title">Budget Assumptions</div>
+    <ul>
+      <li>3% annual inflation applied across all line items</li>
+      <li>Year 1 is 100% WFF-funded to build infrastructure and recruit the first cohort</li>
+      <li>Year 2 tapers to 65% WFF / 35% Arkade + Chamber match</li>
+      <li>Year 3 tapers to 30% WFF / 70% earned revenue, sponsorship, and match</li>
+      <li>Arkade absorbs $60,000/yr in utilities, legal, accounting, and operating software outside the grant budget</li>
+      <li>All grant funds administered through the Chamber as fiduciary; quarterly reporting against KPIs</li>
+      <li>Monthly equal distribution within each budget category</li>
+    </ul>
+  </div>
+
+  <div class="page-footer">
+    <span>Land + Launch NWA</span>
+    <div class="page-footer-line"></div>
+    <span>Budget Overview</span>
+  </div>
+</div>
+
+</body>
+</html>
