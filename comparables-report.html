@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparables Research — Land + Launch NWA</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  @font-face { font-family:'Safiro'; src:url('fonts/Safiro-Regular.otf') format('opentype'); font-weight:400; }
+  @font-face { font-family:'Safiro'; src:url('fonts/Safiro-Medium.otf') format('opentype'); font-weight:500; }
+  @font-face { font-family:'Safiro'; src:url('fonts/Safiro-SemiBold.otf') format('opentype'); font-weight:600; }
+  @font-face { font-family:'Safiro'; src:url('fonts/Safiro-Bold.otf') format('opentype'); font-weight:700; }
+
+  :root {
+    --cypress: #033B43;
+    --coral: #FC3B66;
+    --white: #FFFFFF;
+    --off-white: #F5F3EF;
+    --muted: #3a5c63;
+    --mid: #8BA3A7;
+    --fh: 'Safiro', Georgia, serif;
+    --fb: 'DM Sans', system-ui, sans-serif;
+  }
+
+  @page { size: letter; margin: 0; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 14.5px; }
+  body {
+    font-family: var(--fb);
+    color: var(--cypress);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ─── COVER ─── */
+  .cover {
+    height: 100vh;
+    background: var(--cypress);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 4.5rem;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 55%; height: 100%;
+    background: linear-gradient(135deg, rgba(252,59,102,0.06) 0%, transparent 60%);
+  }
+  .cover-line {
+    position: absolute;
+    top: 4.5rem;
+    right: 4.5rem;
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--coral), transparent);
+  }
+  .cover-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 1.6rem;
+  }
+  .cover-title {
+    font-family: var(--fh);
+    font-weight: 700;
+    font-size: 3.2rem;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--white);
+    margin-bottom: 1.2rem;
+  }
+  .cover-tagline {
+    font-family: var(--fh);
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.78);
+    margin-bottom: 1.8rem;
+  }
+  .cover-sub {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.55);
+    max-width: 520px;
+    margin-bottom: 3rem;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 3rem;
+  }
+  .cover-meta-item {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.8;
+  }
+  .cover-meta-item strong {
+    display: block;
+    color: rgba(255,255,255,0.6);
+    font-weight: 500;
+  }
+
+  /* ─── PAGES ─── */
+  .page {
+    padding: 3.5rem 4rem 4.5rem;
+    min-height: 100vh;
+    page-break-after: always;
+    position: relative;
+  }
+  .page:last-of-type { page-break-after: auto; }
+  .page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 2.4rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid #e0ddd7;
+  }
+  .page-label {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--coral);
+  }
+  .page-title {
+    font-family: var(--fh);
+    font-weight: 700;
+    font-size: 1.55rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--cypress);
+    margin-top: 0.4rem;
+  }
+  .page-num {
+    font-family: var(--fh);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--mid);
+  }
+
+  /* ─── PROSE ─── */
+  p {
+    font-size: 0.83rem;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+  .lead {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--cypress);
+    font-weight: 400;
+  }
+  strong { color: var(--cypress); font-weight: 600; }
+  em { font-style: italic; }
+
+  h3 {
+    font-family: var(--fh);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--cypress);
+    margin-top: 1.3rem;
+    margin-bottom: 0.5rem;
+    padding-left: 0.8rem;
+    border-left: 3px solid var(--coral);
+  }
+  h4 {
+    font-family: var(--fh);
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--cypress);
+    margin-top: 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+
+  ul {
+    list-style: none;
+    margin-bottom: 0.8rem;
+  }
+  ul li {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--muted);
+    padding-left: 1.2rem;
+    margin-bottom: 0.3rem;
+    position: relative;
+  }
+  ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 12px;
+    height: 1px;
+    background: var(--coral);
+  }
+
+  /* ─── COMPARABLE BLOCK ─── */
+  .comp-block {
+    margin-bottom: 1.4rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid #eae7e2;
+  }
+  .comp-block:last-child { border-bottom: none; }
+  .comp-num-name {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+  .comp-num {
+    font-family: var(--fh);
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: rgba(3,59,67,0.2);
+  }
+  .comp-name {
+    font-family: var(--fh);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--cypress);
+  }
+  .comp-meta {
+    font-size: 0.7rem;
+    color: var(--mid);
+    margin-bottom: 0.6rem;
+    line-height: 1.6;
+  }
+  .comp-meta strong { color: var(--cypress); font-weight: 500; }
+
+  /* ─── CALLOUTS ─── */
+  .callout {
+    background: var(--off-white);
+    padding: 1.4rem 1.6rem;
+    margin: 0.9rem 0;
+    border-left: 3px solid var(--coral);
+  }
+  .callout p { margin-bottom: 0; font-size: 0.83rem; }
+
+  .dark-callout {
+    background: var(--cypress);
+    padding: 1.6rem 1.8rem;
+    margin: 1.2rem 0;
+  }
+  .dark-callout p {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.85rem;
+    margin-bottom: 0;
+  }
+  .dark-callout strong { color: var(--white); }
+
+  /* ─── COMPARISON TABLE ─── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.8rem 0 1rem;
+    font-size: 0.75rem;
+  }
+  thead th {
+    background: var(--cypress);
+    color: rgba(255,255,255,0.78);
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.6rem 0.7rem;
+    text-align: left;
+  }
+  tbody td {
+    padding: 0.5rem 0.7rem;
+    border-bottom: 1px solid #eae7e2;
+    color: var(--muted);
+    line-height: 1.5;
+    font-size: 0.74rem;
+  }
+  tbody tr:nth-child(even) td { background: rgba(245,243,239,0.5); }
+  tbody td:first-child {
+    color: var(--cypress);
+    font-weight: 500;
+  }
+
+  /* ─── SOURCES ─── */
+  .sources {
+    font-size: 0.65rem;
+    color: var(--mid);
+    margin-top: 0.5rem;
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ─── TAKEAWAYS ─── */
+  .takeaway {
+    margin-bottom: 1rem;
+    padding: 1rem 1.2rem;
+    background: var(--off-white);
+    border-left: 3px solid var(--coral);
+  }
+  .takeaway-num {
+    font-family: var(--fh);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--coral);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+  .takeaway-title {
+    font-family: var(--fh);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--cypress);
+    margin-bottom: 0.4rem;
+  }
+  .takeaway-body {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: var(--muted);
+    margin-bottom: 0;
+  }
+
+  /* ─── PAGE FOOTER ─── */
+  .page-footer {
+    position: absolute;
+    bottom: 1.5rem; left: 4rem; right: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.6rem;
+    color: var(--mid);
+    letter-spacing: 0.05em;
+    padding-top: 0.8rem;
+    border-top: 1px solid #e0ddd7;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ COVER ══════════ -->
+<div class="cover">
+  <div class="cover-line"></div>
+  <p class="cover-eyebrow">Comparables Research</p>
+  <h1 class="cover-title">Industry &amp; Economic<br>Development Report</h1>
+  <p class="cover-tagline">Land + Launch NWA</p>
+  <p class="cover-sub">Real-world comparable programs — public and private — that validate the model Arkade and the Greater Bentonville Area Chamber of Commerce are proposing. Captures outcomes, tracked metrics, and success narratives to strengthen the concept paper and grant narrative.</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <strong>Document Type</strong>
+      Internal Research
+    </div>
+    <div class="cover-meta-item">
+      <strong>Updated</strong>
+      April 2026
+    </div>
+    <div class="cover-meta-item">
+      <strong>Prepared For</strong>
+      Kathryn Carlisle / Arkade
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ EXEC SUMMARY ══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div>
+      <p class="page-label">Executive Summary</p>
+      <h2 class="page-title">A proven category of regional investment</h2>
+    </div>
+    <p class="page-num">02</p>
+  </div>
+
+  <p class="lead">Structured ecosystem development programs for international and out-of-market companies are not a new idea — they are an established and growing category of regional investment, present in major metros across the U.S. and Canada.</p>
+
+  <p>Programs in Austin, Atlanta, Washington DC, Toronto, and others demonstrate measurable ROI: companies that enter through structured pathways at significantly higher rates establish permanent presence, create jobs, and generate community and economic returns than companies navigating markets informally.</p>
+
+  <p>Northwest Arkansas has proven demand for this type of program — Plug and Play's supply chain accelerator, launched in 2019 with Walmart, Tyson, and J.B. Hunt as founding partners, demonstrated that global companies will come to Bentonville when there is structured infrastructure to receive them. What NWA has not yet built is a program specifically designed for growth-stage, internationally-oriented founders seeking structured access to the region's anchor industries — consumer commerce, food and agriculture, and logistics and transportation. That is the gap this initiative addresses.</p>
+
+  <div class="dark-callout">
+    <p><strong>The bottom line for the grant narrative:</strong> This is not an untested concept. It is a proven category of regional investment that NWA has not yet claimed. Every comparable metro that has built this infrastructure has seen measurable community and economic returns. Bentonville has everything those metros have — and more — but is ceding ground to more organized ecosystems every year without it.</p>
+  </div>
+
+  <div class="page-footer">
+    <span>Land + Launch NWA — Comparables Research</span>
+    <span>Executive Summary</span>
+  </div>
+</div>
+
+<!-- ══════════ PART I — OPPORTUNITY AUSTIN + GEORGIA TECH ══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div>
+      <p class="page-label">Part I · U.S. Comparables</p>
+      <h2 class="page-title">Opportunity Austin &amp; Georgia Tech</h2>
+    </div>
+    <p class="page-num">03</p>
+  </div>
+
+  <div class="comp-block">
+    <div class="comp-num-name">
+      <span class="comp-num">01</span>
+      <span class="comp-name">Opportunity Austin — Global Launch Pad</span>
+    </div>
+    <p class="comp-meta"><strong>Location:</strong> Austin, Texas · <strong>Operator:</strong> Opportunity Austin (backed by Austin Chamber of Commerce) · <strong>Model:</strong> Chamber-led public-private soft-landing program</p>
+
+    <h4>Structure</h4>
+    <p>The Global Austin Launch Pad provides international companies with a low-risk, high-impact entry into the U.S. market through tailored support, strategic connections, and dedicated office space. The program is closely integrated with Austin's broader economic development infrastructure and operates under the Chamber umbrella — making it structurally the most analogous to what Arkade and the Greater Bentonville Area Chamber are proposing. Opportunity Austin has signed MOUs with international partners including Switzerland Innovation to formalize pipelines for global company recruitment into the Austin region.</p>
+
+    <h4>Outcomes</h4>
+    <ul>
+      <li><strong>400+ foreign-owned companies</strong> now operating in the Austin region — a direct result of sustained, structured international business attraction</li>
+      <li>The program serves as the entry point for international companies across sectors including technology, clean energy, and advanced manufacturing</li>
+    </ul>
+
+    <h4>Why It's Relevant</h4>
+    <p>Austin is the most direct U.S. market competitor to NWA for attracting growth-stage technology companies seeking access to anchor industries and ecosystem support. The fact that Austin has formalized a Chamber-backed ecosystem program while NWA has not is a competitive risk the proposal should name explicitly.</p>
+    <p class="sources">Sources: Opportunity Austin Global &amp; Innovation · Soft-Landing Program</p>
+  </div>
+
+  <div class="comp-block">
+    <div class="comp-num-name">
+      <span class="comp-num">02</span>
+      <span class="comp-name">Georgia Tech Enterprise Innovation Institute (EI²)</span>
+    </div>
+    <p class="comp-meta"><strong>Location:</strong> Atlanta, Georgia · <strong>Operator:</strong> Georgia Tech Enterprise Innovation Institute · <strong>Model:</strong> University-anchored, cohort-based soft landing</p>
+
+    <h4>Structure</h4>
+    <p>Georgia Tech's EI² Global program runs cohort-based soft landing immersions — both virtual (7-week) and in-person — designed to equip international leadership teams with the legal, operational, and commercial foundations needed to enter the U.S. market. The program combines education, mentorship, investor access, and curated customer/partner introductions.</p>
+
+    <h4>Outcomes (since 2018 launch)</h4>
+    <ul>
+      <li>22 companies from 5 countries across 2 continents participated</li>
+      <li><strong>15 of 22 companies (68%)</strong> successfully expanded into the U.S. market — a conversion rate that significantly outpaces informal market entry attempts</li>
+      <li>Companies engaged through workshops, mentor networks, and curated pilot conversations with local enterprises</li>
+    </ul>
+
+    <h4>Why It's Relevant</h4>
+    <p>Georgia Tech's 68% U.S. expansion rate is a powerful benchmark. It demonstrates that structured programming — not just introductions — is what converts international interest into economic presence. The program's Atlanta base also proves that a non-coastal city can compete for global companies when it has organized infrastructure.</p>
+    <p class="sources">Sources: EI² Global Soft Landings · Spring 2024 Cohort Wrap-Up</p>
+  </div>
+
+  <div class="page-footer">
+    <span>Land + Launch NWA — Comparables Research</span>
+    <span>Part I · Opportunity Austin &amp; Georgia Tech</span>
+  </div>
+</div>
+
+<!-- ══════════ PART I — DC + PLUG AND PLAY ══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div>
+      <p class="page-label">Part I · U.S. Comparables</p>
+      <h2 class="page-title">Washington DC &amp; Plug and Play NWA</h2>
+    </div>
+    <p class="page-num">04</p>
+  </div>
+
+  <div class="comp-block">
+    <div class="comp-num-name">
+      <span class="comp-num">03</span>
+      <span class="comp-name">Washington DC Global Soft Landing Program</span>
+    </div>
+    <p class="comp-meta"><strong>Location:</strong> Washington, DC · <strong>Operator:</strong> WDCEP + Office of the Deputy Mayor · <strong>Model:</strong> Government-backed, multi-partner soft landing</p>
+
+    <h4>Structure</h4>
+    <p>Launched in April 2024, DC's program represents the most recent major market entry into this space — demonstrating that even established economic development centers are newly formalizing soft-landing infrastructure. Two pathways: (1) <strong>Physical presence</strong> — flexible, discounted co-working space (20% below market rent, 50% off setup fees) with a 3-month minimum; (2) <strong>Immigration</strong> — cap-exempt H-1B visa sponsorship through The George Washington University.</p>
+    <p>Partners include WDCEP, DC Office of the Deputy Mayor, Golden Triangle BID, Penn West Equity and Innovation District, George Washington University, and multiple chambers of commerce. The program has established MOUs with World Trade Center Dublin and other international partners.</p>
+
+    <h4>Why It's Relevant</h4>
+    <p>DC's 2024 launch proves two things: this category of program is still actively emerging — NWA is not late to a mature market, it is behind on a growing one. Second, the multi-partner structure (economic partnership + government + university + chambers) closely mirrors the Chamber-Arkade partnership model being proposed.</p>
+    <p class="sources">Sources: DC Global Soft Landing · Program Launch Press Release</p>
+  </div>
+
+  <div class="comp-block">
+    <div class="comp-num-name">
+      <span class="comp-num">04</span>
+      <span class="comp-name">Plug and Play Northwest Arkansas</span>
+    </div>
+    <p class="comp-meta"><strong>Location:</strong> Bentonville, Arkansas · <strong>Operator:</strong> Plug and Play Tech Center · <strong>Model:</strong> Corporate-backed startup accelerator</p>
+
+    <h4>Structure</h4>
+    <p>Plug and Play launched its NWA supply chain and logistics accelerator in 2019 in partnership with Walmart, Tyson Foods, and J.B. Hunt Transport — the region's three largest corporate anchors. The program recruits early-stage startups, connects them to corporate mentors and potential pilot partners, and runs cohort-based programming. In 2024, Plug and Play expanded to launch a health tech accelerator in NWA as well.</p>
+
+    <h4>Outcomes</h4>
+    <ul>
+      <li>Second cohort (2020): 13 startups presented to corporate partners including Walmart, Tyson, J.B. Hunt, and Georgia Pacific</li>
+      <li>Notable pilot outcomes: <strong>BOPS</strong> deployed with a major retailer to improve in-stocks and reduce markdowns; <strong>Gatik</strong> (autonomous trucks) launched commercial operations hauling refrigerated food for Tyson Foods</li>
+      <li>Plug and Play's global portfolio: companies have raised over $9 billion in funding; portfolio includes major exits such as Dropbox, PayPal, and Lending Club</li>
+      <li>Expanded to health tech in 2024, demonstrating sustained regional demand</li>
+    </ul>
+
+    <h4>Why It's Relevant — and Why It Leaves a Gap</h4>
+    <p>Plug and Play's success in NWA is the most direct proof point that the Bentonville market can attract and activate global technology companies when structured infrastructure exists. However, Plug and Play operates as a <strong>corporate-funded accelerator for early-stage startups</strong>, with enterprises as its primary customer. Land + Launch NWA is structurally different — it is built around the founders themselves.</p>
+
+    <table>
+      <thead>
+        <tr><th>&nbsp;</th><th>Plug and Play NWA</th><th>Land + Launch NWA</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Customer</td><td>Enterprises</td><td>Founders</td></tr>
+        <tr><td>Company stage</td><td>Early-stage startups</td><td>Growth-stage (Series A+)</td></tr>
+        <tr><td>Company origin</td><td>Primarily U.S.</td><td>International / out-of-market</td></tr>
+        <tr><td>Primary value</td><td>Mentorship, MVP validation, corporate access</td><td>Workspace, programming, ecosystem integration, sustained presence</td></tr>
+        <tr><td>Duration</td><td>Short cohort</td><td>6-month structured engagement</td></tr>
+        <tr><td>Outcome goal</td><td>Demo Day</td><td>Long-term commitment to NWA ecosystem</td></tr>
+      </tbody>
+    </table>
+
+    <p>The proposed initiative does not compete with Plug and Play — it serves a company profile that Plug and Play is not designed to serve, and fills the adjacent gap in NWA's ecosystem.</p>
+    <p class="sources">Sources: Plug and Play NWA Launch · Talk Business: Plug and Play NWA · Health Accelerator Launch</p>
+  </div>
+
+  <div class="page-footer">
+    <span>Land + Launch NWA — Comparables Research</span>
+    <span>Part I · DC &amp; Plug and Play</span>
+  </div>
+</div>
+
+<!-- ══════════ SELECTUSA + INTERNATIONAL ══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div>
+      <p class="page-label">Parts I &amp; II</p>
+      <h2 class="page-title">SelectUSA &amp; International Comparables</h2>
+    </div>
+    <p class="page-num">05</p>
+  </div>
+
+  <div class="comp-block">
+    <div class="comp-num-name">
+      <span class="comp-num">05</span>
+      <span class="comp-name">SelectUSA — Federal FDI Program</span>
+    </div>
+    <p class="comp-meta"><strong>Location:</strong> National (U.S. federal program) · <strong>Operator:</strong> U.S. Department of Commerce · <strong>Model:</strong> Federal investment attraction platform</p>
+
+    <h4>Structure</h4>
+    <p>SelectUSA is the U.S. government's primary program for attracting and facilitating foreign direct investment. It connects international companies with U.S. economic development organizations and state/local governments, and hosts an annual Investment Summit as its flagship event.</p>
+
+    <h4>Outcomes</h4>
+    <ul>
+      <li>Since inception: <strong>$390+ billion in investment facilitated</strong>, supporting over <strong>265,000 U.S. jobs</strong></li>
+      <li>2023 Summit: 4,900 attendees from 83 international markets — largest in program history</li>
+      <li>2024 Summit: 5,000+ participants across 96 countries and markets</li>
+      <li>$248 billion in foreign-owned company investments facilitated during the Biden administration alone</li>
+    </ul>
+
+    <h4>Why It's Relevant</h4>
+    <p>SelectUSA demonstrates the scale of the opportunity — hundreds of billions of dollars in foreign capital is actively seeking U.S. market entry. The federal program creates demand but does not provide local delivery infrastructure. Regional programs that can receive, activate, and retain that capital — like what Arkade and the Chamber are proposing — are exactly what converts federal-level interest into local economic outcomes. Arkade should explore SelectUSA partnership or presence as a recruitment channel.</p>
+    <p class="sources">Sources: 2023 SelectUSA Summit · SelectUSA Overview</p>
+  </div>
+
+  <div class="comp-block">
+    <div class="comp-num-name">
+      <span class="comp-num">06</span>
+      <span class="comp-name">Toronto Global — Investment Attraction &amp; Soft Landing</span>
+    </div>
+    <p class="comp-meta"><strong>Location:</strong> Toronto, Ontario, Canada · <strong>Operator:</strong> Toronto Global (public-private partnership) · <strong>Model:</strong> Regional FDI agency with integrated soft landing</p>
+
+    <h4>Structure</h4>
+    <p>Toronto Global is the Greater Toronto Area's primary foreign investment attraction organization. It combines proactive international recruitment, investor facilitation, and an integrated soft landing program providing 6 months of prime downtown real estate and $500,000 USD in perks to qualifying international companies. Formal relationship with Immigration, Refugees and Citizenship Canada (IRCC).</p>
+
+    <h4>Outcomes — Most Comprehensive Data Set Available</h4>
+    <p><strong>Annual (2023/24):</strong> 44 total investments facilitated · 5,527 total jobs created · $217.5M CAD in tax impact · $637M CAD in capital expenditure · 40%+ of jobs created landed outside the City of Toronto</p>
+    <p><strong>Since inception (cumulative):</strong> <strong>260 investments facilitated</strong> · <strong>33,000 total jobs</strong> · <strong>$1.3B CAD in total tax impact</strong> · $3.46B CAD in capital expenditure · 50+ soft landing program alumni</p>
+
+    <h4>Why It's Relevant</h4>
+    <p>Toronto Global is the gold standard comparable — the closest operational model to what Arkade and the Chamber are proposing, at a larger scale. Its data provides the most compelling ROI benchmarks available: 260 structured investments over its lifetime have produced 33,000 jobs and $1.3B in tax revenue. These numbers establish that structured investment attraction programs are high-return regional infrastructure.</p>
+    <p class="sources">Sources: Toronto Global Annual Report 2023/24 · Soft Landing Program</p>
+  </div>
+
+  <div class="page-footer">
+    <span>Land + Launch NWA — Comparables Research</span>
+    <span>SelectUSA &amp; Toronto Global</span>
+  </div>
+</div>
+
+<!-- ══════════ MARS + PART III ══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div>
+      <p class="page-label">Part II &amp; III</p>
+      <h2 class="page-title">MaRS Discovery District &amp; Sector Context</h2>
+    </div>
+    <p class="page-num">06</p>
+  </div>
+
+  <div class="comp-block">
+    <div class="comp-num-name">
+      <span class="comp-num">07</span>
+      <span class="comp-name">MaRS Discovery District</span>
+    </div>
+    <p class="comp-meta"><strong>Location:</strong> Toronto, Ontario, Canada · <strong>Operator:</strong> MaRS (registered charity / innovation hub) · <strong>Model:</strong> Large-scale innovation hub with commercialization programming</p>
+
+    <h4>Structure</h4>
+    <p>MaRS is North America's largest urban innovation hub — a 1.4M sq ft facility housing 1,200+ ventures, 120+ tenant organizations, and major global tech companies. As a registered charity, it receives philanthropic and government support while delivering commercial programming including capital access, customer introductions, talent pipelines, and a dedicated scale-up program (Momentum) for high-growth companies.</p>
+
+    <h4>Outcomes</h4>
+    <ul>
+      <li><strong>1,400+ ventures supported</strong></li>
+      <li><strong>$2.4 billion</strong> in collective capital raises (2020 alone)</li>
+      <li><strong>$1.5 billion</strong> in collective revenue (2020 alone)</li>
+      <li><strong>Capital raises 45% larger than the national average</strong> for supported companies</li>
+      <li><strong>60%+ average year-over-year revenue growth</strong> for portfolio companies</li>
+      <li>MaRS Investment Accelerator Fund: <strong>$75M deployed → $1.37B in follow-on funding → 31 exits</strong></li>
+      <li>Over a decade: <strong>33,000 jobs created, $11.5B in revenue generated, $30B contributed to GDP</strong></li>
+      <li>150,000+ visitors annually, 2,000+ events per year</li>
+    </ul>
+
+    <h4>Why It's Relevant</h4>
+    <p>MaRS demonstrates what happens when philanthropic capital builds the infrastructure for a long-term innovation ecosystem. Its charitable structure — and the patient capital that made it possible — is analogous to the catalytic role being asked of philanthropic partners in NWA. MaRS also shows that physical infrastructure plus curated programming plus capital access is the winning formula.</p>
+    <p class="sources">Sources: MaRS Impact Report · MaRS Overview</p>
+  </div>
+
+  <h3>Part III: Sector Context — NWA's Anchor Industries</h3>
+
+  <h4>The Global Opportunity</h4>
+  <p>The programs above are largely sector-agnostic. Land + Launch NWA is specifically positioned at the intersection of Northwest Arkansas' anchor industries — consumer commerce, food and agriculture, and logistics and transportation — and the dense ecosystem of suppliers, talent, and capital that surrounds them. Five global headquarters anchor those industries: Walmart and Sam's Club in consumer commerce, Tyson Foods and Simmons Foods in food and agriculture, and J.B. Hunt in logistics and transportation, alongside more than 1,100 CPG brand offices. <strong>No comparable metro can match this concentration of industry density across multiple adjacent verticals.</strong></p>
+
+  <h4>Demand Is Proven</h4>
+  <ul>
+    <li>Plug and Play came to Bentonville because the demand existed — companies wanted structured access to NWA's anchor industries and ecosystem</li>
+    <li>The CPG and supplier network (1,100+ companies in Bentonville) represents a uniquely concentrated enterprise customer base that no other metro can replicate</li>
+    <li>Companies like BOPS and Gatik achieved commercial traction through structured NWA programming — proving the conversion works when infrastructure exists</li>
+  </ul>
+
+  <h4>What's Missing</h4>
+  <p>The NWA ecosystem has accelerators (Plug and Play, Fuel) for early-stage companies. It does not have a program for <strong>growth-stage, internationally-oriented founders</strong> seeking structured access to NWA's anchor industries, ecosystem integration, and a pathway to long-term presence in the region. That is the gap this initiative fills — and no comparable program in NWA currently addresses it.</p>
+
+  <div class="page-footer">
+    <span>Land + Launch NWA — Comparables Research</span>
+    <span>Parts II &amp; III</span>
+  </div>
+</div>
+
+<!-- ══════════ BENCHMARK DATA + TAKEAWAYS ══════════ -->
+<div class="page">
+  <div class="page-header">
+    <div>
+      <p class="page-label">Parts IV &amp; V</p>
+      <h2 class="page-title">Benchmarks &amp; Narrative Takeaways</h2>
+    </div>
+    <p class="page-num">07</p>
+  </div>
+
+  <h3>Benchmark Data for Grant Narrative</h3>
+
+  <table>
+    <thead>
+      <tr><th>Metric</th><th>Source</th><th>Data Point</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>U.S. expansion rate from structured programs</td><td>Georgia Tech EI²</td><td>68% of participants expanded into U.S.</td></tr>
+      <tr><td>Jobs per structured investment</td><td>Toronto Global</td><td>~125 jobs per facilitated investment</td></tr>
+      <tr><td>Annual jobs from 44 structured investments</td><td>Toronto Global</td><td>5,527 jobs (2023/24)</td></tr>
+      <tr><td>Tax return from structured FDI program</td><td>Toronto Global</td><td>$1.3B CAD tax impact (cumulative)</td></tr>
+      <tr><td>Capital raise lift from structured support</td><td>MaRS</td><td>45% larger than national average</td></tr>
+      <tr><td>Foreign companies in a structured market</td><td>Opportunity Austin</td><td>400+ foreign-owned companies</td></tr>
+      <tr><td>General soft landing U.S. expansion rate</td><td>CIC / Industry avg</td><td>~30% of participants open U.S. operations</td></tr>
+      <tr><td>Federal FDI volume seeking U.S. entry</td><td>SelectUSA</td><td>$390B+ facilitated since inception</td></tr>
+      <tr><td>Companies seeking NWA access (proven)</td><td>Plug and Play NWA</td><td>13 startups per cohort, expanded to health (2024)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Key Narrative Takeaways</h3>
+
+  <div class="takeaway">
+    <p class="takeaway-num">01</p>
+    <p class="takeaway-title">NWA is not pioneering a new concept — it is building on a proven one.</p>
+    <p class="takeaway-body">Structured ecosystem development programs exist in Austin, Atlanta, Washington DC, Toronto, and beyond. These are proven, ROI-positive investments in regional infrastructure. NWA's absence from this category is the risk — not the proposed initiative.</p>
+  </div>
+
+  <div class="takeaway">
+    <p class="takeaway-num">02</p>
+    <p class="takeaway-title">The Plug and Play precedent is the strongest local proof point.</p>
+    <p class="takeaway-body">A Silicon Valley-based accelerator built a NWA program specifically because the region's anchor industries created demand for it. Land + Launch NWA is the next layer of infrastructure on top of a market that has already demonstrated pull, and it serves a different audience (founders, growth-stage, internationally oriented) than Plug and Play does.</p>
+  </div>
+
+  <div class="takeaway">
+    <p class="takeaway-num">03</p>
+    <p class="takeaway-title">Structured programs produce dramatically better outcomes than informal ones.</p>
+    <p class="takeaway-body">Georgia Tech's 68% U.S. expansion rate vs. the ~30% industry average demonstrates that program quality and structure are the decisive variable. Toronto Global's 33,000 jobs over its history demonstrates the compounding value of sustained investment in this infrastructure.</p>
+  </div>
+
+  <div class="takeaway">
+    <p class="takeaway-num">04</p>
+    <p class="takeaway-title">The public-private, nonprofit-fiduciary structure is the right model.</p>
+    <p class="takeaway-body">Every major comparator in this report — Toronto Global, Opportunity Austin, Washington DC's program, MaRS — operates through a public-private structure with clear nonprofit or government accountability. The Chamber-Arkade model mirrors best practice.</p>
+  </div>
+
+  <div class="takeaway">
+    <p class="takeaway-num">05</p>
+    <p class="takeaway-title">Catalytic investment in this category is high-return regional infrastructure.</p>
+    <p class="takeaway-body">The Toronto Global and MaRS data demonstrate that philanthropic and public capital invested in this category generates tax returns, capital inflows, ecosystem activity, and job creation that far exceed the initial investment. This is infrastructure spending with measurable community and economic ROI.</p>
+  </div>
+
+  <p class="sources" style="margin-top:2rem; text-align:center;">Report prepared by Claude (Chief of Staff) · Internal use only · Arkade / KGC<br>Sources: Opportunity Austin · Georgia Tech EI² · Washington DC Economic Partnership · Plug and Play · SelectUSA / U.S. Department of Commerce · Toronto Global · MaRS Discovery District · Talk Business &amp; Politics</p>
+
+  <div class="page-footer">
+    <span>Land + Launch NWA — Comparables Research</span>
+    <span>Parts IV &amp; V</span>
+  </div>
+</div>
+
+</body>
+</html>
