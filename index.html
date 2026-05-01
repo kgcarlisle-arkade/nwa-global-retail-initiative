@@ -302,6 +302,65 @@
     .foot-contact { font-size:0.75rem; color:rgba(255,255,255,0.38); text-align:right; line-height:1.7; }
     .foot-contact a { color:var(--coral); opacity:0.8; transition:opacity 0.2s; }
     .foot-contact a:hover { opacity:1; }
+
+    /* ─── MOBILE ─────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding:1rem 1.25rem; }
+      .nav-cta { font-size:0.68rem; padding:0.55rem 1rem; }
+
+      .hero { min-height:560px; }
+      .hero-content { padding:0 1.25rem; }
+      .hero-sub { margin-bottom:2.25rem; }
+
+      .region-grid { grid-template-columns:1fr; min-height:auto; }
+      .region-content { padding:4.5rem 1.5rem; max-width:100%; margin:0; }
+      .region-photo { min-height:300px; }
+      .region-photo img { height:300px; }
+
+      .gap { padding:4.5rem 1.5rem; }
+      .gap-grid { grid-template-columns:1fr; gap:2.5rem; }
+      .gap-right { padding-top:0; }
+
+      .initiative { padding:4.5rem 1.5rem; }
+      .initiative-intro { grid-template-columns:1fr; gap:1.75rem; margin-bottom:2.5rem; align-items:start; }
+      .pillars { grid-template-columns:1fr 1fr; }
+      .pillar { padding:1.8rem 1.4rem; }
+
+      .industry-support { padding:4.5rem 1.5rem; }
+
+      .proof { padding:4.5rem 1.5rem; }
+      .proof-head { grid-template-columns:1fr; gap:2rem; margin-bottom:2.5rem; align-items:start; }
+      .comparables { grid-template-columns:1fr; }
+      .comp { padding:2rem 1.75rem; }
+      .proof-foot { flex-direction:column; align-items:flex-start; gap:1.5rem; }
+
+      .outcomes { padding:4.5rem 1.5rem; }
+      .outcomes-head { grid-template-columns:1fr; gap:2rem; margin-bottom:2.5rem; align-items:start; }
+      .kpis { grid-template-columns:1fr 1fr; }
+      .kpi { padding:2rem 1.5rem; }
+      .outcomes-photo { grid-template-columns:1fr; }
+      .outcomes-photo img { height:220px; }
+
+      .partnership { padding:4.5rem 1.5rem; }
+      .partner-grid { grid-template-columns:1fr; }
+      .partner { padding:2rem 1.75rem; }
+      .gov-note { padding:1.75rem; }
+
+      .ask { padding:5rem 1.5rem; }
+      .taper { flex-direction:column; gap:0.5rem; align-items:stretch; }
+      .taper-item { max-width:100%; }
+
+      footer { padding:2rem 1.5rem; }
+      .foot-inner { flex-direction:column; text-align:center; gap:1.5rem; }
+      .foot-text { text-align:center; }
+      .foot-contact { text-align:center; }
+    }
+
+    @media (max-width: 480px) {
+      .pillars { grid-template-columns:1fr; }
+      .kpis { grid-template-columns:1fr; }
+      .stats { gap:2rem; }
+    }
   </style>
 </head>
 <body>
